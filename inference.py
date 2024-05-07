@@ -1,5 +1,5 @@
-import os
-
+#import os
+"""
 import colossalai
 import torch
 import torch.distributed as dist
@@ -10,35 +10,36 @@ from opensora.acceleration.parallel_states import set_sequence_parallel_group
 from opensora.datasets import IMG_FPS, save_sample
 from opensora.models.text_encoder.t5 import text_preprocessing
 from opensora.registry import MODELS, SCHEDULERS, build_module
+"""
 from opensora.utils.config_utils import parse_configs
-from opensora.utils.misc import to_torch_dtype
+#from opensora.utils.misc import to_torch_dtype
 
 
 def main():
-    # ======================================================
-    # 1. cfg and init distributed env
-    # ======================================================
+
+    print(f' step 1. cfg and init distributed env')
     cfg = parse_configs(training=False)
-    print(cfg)
 
-    # init distributed
-    if os.environ.get("WORLD_SIZE", None):
-        use_dist = True
-        colossalai.launch_from_torch({})
-        coordinator = DistCoordinator()
+    """
+    
+    print(f' step 2. runtime variables')
+    output_dir = args.output_dir
+    os.makedirs(output_dir, exist_ok=True)
+    args.logging_dir = os.path.join(output_dir, 'log')
+    os.makedirs(args.logging_dir, exist_ok=True)
+    record_save_dir = os.path.join(output_dir, 'record')
+    os.makedirs(record_save_dir, exist_ok=True)
+    with open(os.path.join(record_save_dir, 'config.json'), 'w') as f:
+        json.dump(vars(args), f, indent=4)
 
-        if coordinator.world_size > 1:
-            set_sequence_parallel_group(dist.group.WORLD)
-            enable_sequence_parallelism = True
-        else:
-            enable_sequence_parallelism = False
-    else:
-        use_dist = False
-        enable_sequence_parallelism = False
+    print(f'\n step 2. preparing accelerator')
+    accelerator = prepare_accelerator(args)
+    is_main_process = accelerator.is_main_process
 
-    # ======================================================
-    # 2. runtime variables
-    # ======================================================
+    print(f'\n step 3. model')
+    weight_dtype, save_dtype = prepare_dtype(args)
+    
+    
     torch.set_grad_enabled(False)
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
@@ -168,7 +169,7 @@ def main():
                         save_path = f"{save_path}-{k}"
                     save_sample(sample, fps=cfg.fps // cfg.frame_interval, save_path=save_path)
                     sample_idx += 1
-
+    """
 
 if __name__ == "__main__":
     main()

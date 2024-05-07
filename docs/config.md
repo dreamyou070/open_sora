@@ -61,7 +61,7 @@ save_dir = "./samples"         # path to save samples
 
 ## Advanced Inference config
 
-The [`inference-long.py`](/scripts/inference-long.py) script is used to generate long videos, and it also provides all functions of the [`inference.py`](/scripts/inference.py) script. The following arguments are specific to the `inference-long.py` script.
+The [`inference-long.py`](/inference-long.py) script is used to generate long videos, and it also provides all functions of the [`inference.py`](/inference.py) script. The following arguments are specific to the `inference-long.py` script.
 
 ```python
 loop = 10

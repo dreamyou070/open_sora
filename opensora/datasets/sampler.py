@@ -5,7 +5,7 @@ from typing import Iterator, List, Optional
 
 import torch
 import torch.distributed as dist
-from pandarallel import pandarallel
+#from pandarallel import pandarallel
 from torch.utils.data import DistributedSampler
 
 from .bucket import Bucket

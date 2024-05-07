@@ -3,10 +3,10 @@ from typing import Iterator, Optional
 
 import numpy as np
 import torch
-from torch.distributed import ProcessGroup
-from torch.distributed.distributed_c10d import _get_default_group
+#from torch.distributed import ProcessGroup
+#from torch.distributed.distributed_c10d import _get_default_group
 from torch.utils.data import DataLoader, Dataset
-from torch.utils.data.distributed import DistributedSampler
+#from torch.utils.data.distributed import DistributedSampler
 
 from .sampler import VariableVideoBatchSampler
 
